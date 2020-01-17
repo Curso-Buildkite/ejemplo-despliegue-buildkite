@@ -1,0 +1,25 @@
+# Ejemplo de variables de entorno
+env:
+  "GLOBAL_UNO": "UNO"
+  "GLOBAL_DOS": "DOS"
+steps:
+  - command: "./build.sh"
+    label: "Compilar"
+    artifact_paths:
+      - "build/*"
+  - wait
+  - command: "./backup.sh"
+    label: "Archivado backup"
+  - command: "./test.sh functional"
+    label: "Tests Funcionales"
+    env:
+      "LOCAL_UNO": "UNO"
+  - command: "./test.sh unit"
+    label: "Tests Unitarios"
+  - command: "./test.sh load"
+    label: "Tests de carga"
+    env:
+      "LOCAL_DOS": "DOS"
+  - wait
+  - command: "./deploy.sh"
+    label: "Desplegar"
